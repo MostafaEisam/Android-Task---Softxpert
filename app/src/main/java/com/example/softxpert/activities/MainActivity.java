@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements RequestListener {
             if (mPullToRefresh.isRefreshing()) {
                 mPullToRefresh.setRefreshing(false);
             }
-            if (mProgressBar.getVisibility()==View.VISIBLE){
+            if (mProgressBar.getVisibility() == View.VISIBLE) {
                 mProgressBar.setVisibility(View.GONE);
             }
         });
@@ -123,6 +123,14 @@ public class MainActivity extends AppCompatActivity implements RequestListener {
 
     @Override
     public void onFailure(int errorCode) {
-        runOnUiThread(() -> Toast.makeText(this, "onFailure", Toast.LENGTH_SHORT).show());
+        runOnUiThread(() -> {
+            if (mPullToRefresh.isRefreshing()) {
+                mPullToRefresh.setRefreshing(false);
+            }
+            if (mProgressBar.getVisibility() == View.VISIBLE) {
+                mProgressBar.setVisibility(View.GONE);
+            }
+            Toast.makeText(this, "onFailure", Toast.LENGTH_SHORT).show();
+        });
     }
 }
